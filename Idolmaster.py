@@ -34,10 +34,15 @@ def parse_args():
 
 if __name__ == '__main__':
     args = parse_args()
+
+    print('processing...')
     
     input_folder =  args.input_folder
     output_folder =  args.output_folder
     for path in input_folder.iterdir():
+        if path.is_dir():
+            continue
+
         with path.open('rb') as file:
             data = decompress_bundle_file(file)
             if not data:
@@ -49,3 +54,5 @@ if __name__ == '__main__':
 
         with new_path.open('wb') as file:
             file.write(data)
+
+    print('done')
